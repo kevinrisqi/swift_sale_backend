@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Users')
+@section('title', 'Products')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,15 +11,10 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Users</h1>
+                <h1>Products</h1>
                 <div class="section-header-button">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">Add New</a>
+                    <a href="{{ route('products.create') }}" class="btn btn-primary">Add New</a>
                 </div>
-                {{-- <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Users</a></div>
-                    <div class="breadcrumb-item">All Users</div>
-                </div> --}}
             </div>
             <div class="section-body">
                 <div class="row">
@@ -27,9 +22,9 @@
                         @include('layouts.alert')
                     </div>
                 </div>
-                <h2 class="section-title">Users</h2>
+                <h2 class="section-title">Products</h2>
                 <p class="section-lead">
-                    You can manage all users, such as editing, deleting and more.
+                    You can manage all products, such as editing, deleting and more.
                 </p>
 
 
@@ -37,7 +32,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>All Users</h4>
+                                <h4>All Product</h4>
                             </div>
                             <div class="card-body">
                                 {{-- <div class="float-left">
@@ -50,7 +45,7 @@
                                 </div> --}}
                                 <div class="float-left">
                                     {{-- <a href="{{ route('users.index') }}"></a> --}}
-                                    <form method="GET" action="{{ route('users.index') }}">
+                                    <form method="GET" action="{{ route('products.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -61,35 +56,38 @@
                                 </div>
 
                                 <div class="clearfix mb-3"></div>
-
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Roles</th>
+                                            {{-- <th>Description</th> --}}
+                                            <th>Price</th>
+                                            <th>Stock</th>
+                                            <th>Category</th>
+                                            {{-- <th>Image</th> --}}
                                             {{-- <th>Created At</th> --}}
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($users as $user)
+                                        @foreach ($products as $product)
                                             <tr>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->phone }}</td>
-                                                <td>{{ $user->roles }}</td>
-                                                {{-- <td>{{ $user->created_at }}</td> --}}
+                                                <td>{{ $product->name }}</td>
+                                                {{-- <td>{{ $product->description }}</td> --}}
+                                                <td>{{ $product->price }}</td>
+                                                <td>{{ $product->stock }}</td>
+                                                <td>{{ $product->category }}</td>
+                                                {{-- <td>{{ $product->image }}</td> --}}
+                                                {{-- <td>{{ $product->created_at }}</td> --}}
                                                 <td>
-                                                    <a href="{{ route('users.edit', $user->id) }}"
+                                                    <a href="{{ route('products.edit', $product->id) }}"
                                                         class="btn btn-sm btn-info btn-icon"><i class="fa fa-edit"></i> Edit</a>
-                                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST"
                                                         class="d-inline">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="btn btn-sm btn-danger"
                                                             onclick="return confirm('Are you sure?')"><i class="fa fa-times"></i> Delete</button>
                                                     </form>
-                                                    <a href="{{ route('users.show', $user->id) }}"
+                                                    <a href="{{ route('products.show', $product->id) }}"
                                                         class="btn btn-sm btn-primary btn-icon"><i class="fa fa-eye"></i> Show</a>
                                                 </td>
                                             </tr>
@@ -97,7 +95,7 @@
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    {{ $users->withQueryString()->links() }}
+                                    {{ $products->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>

@@ -7,15 +7,18 @@
             <a href="{{ route('home') }}">St</a>
         </div>
         <ul class="sidebar-menu">
-            <li class="menu-header">Dashboard</li>
             <li class="nav-item dropdown {{ $type_menu === 'dashboard' ? 'active' : '' }}">
-                <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a>
             </li>
         </ul>
         <ul class="sidebar-menu">
-            <li class="menu-header">Dashboard</li>
             <li class="nav-item dropdown {{ $type_menu === 'users' ? 'active' : '' }}">
-                <a href="{{ route('users.index') }}" class="nav-link"><i class="fas fa-fire"></i><span>Users</span></a>
+                <a href="{{ route('users.index') }}" class="nav-link"><i class="fas fa-user"></i><span>Users</span></a>
+            </li>
+        </ul>
+        <ul class="sidebar-menu">
+            <li class="nav-item dropdown {{ $type_menu === 'products' ? 'active' : '' }}">
+                <a href="{{ route('products.index') }}" class="nav-link"><i class="fas fa-box"></i><span>Products</span></a>
             </li>
         </ul>
     </aside>
