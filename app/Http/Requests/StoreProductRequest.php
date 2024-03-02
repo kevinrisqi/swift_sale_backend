@@ -26,7 +26,7 @@ class StoreProductRequest extends FormRequest
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'category' => 'required|in:snack,food,drink',
         ];
     }

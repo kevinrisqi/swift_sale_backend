@@ -27,6 +27,10 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
+        $filename = time() . '.' . $request->image->extension();
+        $request->image->storeAs('public/products', $filename);
+        $data['image'] = $filename;
+
         Product::create($data);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully');

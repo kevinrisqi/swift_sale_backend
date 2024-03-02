@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -27,11 +29,31 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        $request->validated();
+        $data = $request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'price' => 'required|integer',
+            'stock' => 'required|integer',
+            'image' => 'nullable|string',
+            'category' => 'required|string|in:snack,food,drink',
+        ]);
 
-        $product = Product::create($request->all());
+        $base64String = $data['image'];
+
+        $encodedString = explode(',', $base64String, 2);
+        $decodedImage = str_replace(' ', '+', $encodedString[1]);
+
+        $decodedImage = base64_decode($decodedImage);
+
+        $filename = time() . '.jpg';
+
+        Storage::put('public/products/' . $filename, $decodedImage);
+
+        $data['image'] = $filename;
+
+        $product = Product::create($data);
 
         if ($product === null) {
             return ResponseFormatter::error(null, 'Produk gagal ditambahkan', 500);
@@ -57,17 +79,37 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreProductRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
+        $data = $request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'price' => 'required|integer',
+            'stock' => 'required|integer',
+            'image' => 'nullable|string',
+            'category' => 'required|string|in:snack,food,drink',
+        ]);
         $product = Product::find($id);
 
         if ($product === null) {
             return ResponseFormatter::error(null, 'Data produk tidak ditemukan', 404);
         }
 
-        $request->validated();
 
-        $product->update($request->all());
+        $base64String = $data['image'];
+
+        $encodedString = explode(',', $base64String, 2);
+        $decodedImage = str_replace(' ', '+', $encodedString[1]);
+
+        $decodedImage = base64_decode($decodedImage);
+
+        $filename = time() . '.jpg';
+
+        Storage::put('public/products/' . $filename, $decodedImage);
+
+        $data['image'] = $filename;
+
+        $product->update($data);
 
         return ResponseFormatter::success($product, 'Data produk berhasil diperbarui');
     }

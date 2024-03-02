@@ -64,7 +64,7 @@
                                             <th>Price</th>
                                             <th>Stock</th>
                                             <th>Category</th>
-                                            {{-- <th>Image</th> --}}
+                                            <th>Photo</th>
                                             {{-- <th>Created At</th> --}}
                                             <th>Action</th>
                                         </tr>
@@ -75,7 +75,14 @@
                                                 <td>{{ $product->price }}</td>
                                                 <td>{{ $product->stock }}</td>
                                                 <td>{{ $product->category }}</td>
-                                                {{-- <td>{{ $product->image }}</td> --}}
+                                                <td>
+                                                    @if ($product->image && file_exists('storage/products/' . $product->image))
+                                                    <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}"
+                                                        width="50">
+                                                    @else
+                                                    <span class="badge badge-danger">No Image</span>
+                                                    @endif
+                                                </td>
                                                 {{-- <td>{{ $product->created_at }}</td> --}}
                                                 <td>
                                                     <a href="{{ route('products.edit', $product->id) }}"

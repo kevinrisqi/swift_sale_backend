@@ -24,7 +24,7 @@
             <div class="section-body">
                 <h2 class="section-title">List Products</h2>
                 <p class="section-lead">Fill Product Data</p>
-                <form method="POST" action="{{ route('products.store') }}">
+                <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
@@ -66,14 +66,6 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label>Image</label>
-                                        <input type="file" class="form-control @error('image') is-invalid @enderror"
-                                            name="image">
-                                        @error('image')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
                                         <label class="form-label">Category</label>
                                         <div class="selectgroup w-100">
                                             <label class="selectgroup-item">
@@ -89,6 +81,14 @@
                                                 <span class="selectgroup-button">DRINK</span>
                                             </label>
                                         </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image</label>
+                                        <input type="file" class="form-control @error('image') is-invalid @enderror"
+                                            name="image">
+                                        @error('image')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary col-md-12">Submit</button>
                                 </div>
