@@ -72,7 +72,7 @@
                                             <tr>
                                                 <td>{{ $product->name }}</td>
                                                 {{-- <td>{{ $product->description }}</td> --}}
-                                                <td>{{ $product->price }}</td>
+                                                <td>{{ $product->purchase_price }}</td>
                                                 <td>{{ $product->stock }}</td>
                                                 <td>{{ $product->category }}</td>
                                                 <td>

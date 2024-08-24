@@ -24,7 +24,8 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|max:100|min:3',
             'description' => 'nullable|string',
-            'price' => 'required|numeric',
+            'selling_price' => 'required|numeric',
+            'purchase_price' => 'required|numeric',
             'stock' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'category' => 'required|in:snack,food,drink',

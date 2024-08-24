@@ -18,8 +18,9 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'purchase_price' => $this->faker->randomNumber(5),
+            'selling_price' => $this->faker->randomNumber(5),
             'description' => $this->faker->text,
-            'price' => $this->faker->randomNumber(5),
             'stock' => $this->faker->randomNumber(2),
             'image' => $this->faker->imageUrl(),
             'category' => $this->faker->randomElement(['snack', 'food', 'drink']),

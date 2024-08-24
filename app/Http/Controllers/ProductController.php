@@ -48,6 +48,17 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
+        if ($request->hasFile('image')) {
+            /// delete old image
+            $oldImage = Product::findOrFail($product->id)->image;
+            if ($oldImage) {
+                unlink(storage_path('app/public/products/' . $oldImage));
+            }
+            $filename = time() . '.' . $request->image->extension();
+            $request->image->storeAs('public/products', $filename);
+            $data['image'] = $filename;
+        }
+
         $product->update($data);
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully');

@@ -15,7 +15,7 @@
 @section('main')
     <div class="main-content">
         <section class="section">
-            <div class="section-header">
+             <div class="section-header">
                 <h1>Products</h1>
                 <div class="section-header-breadcrumb">
                 </div>
@@ -24,7 +24,7 @@
             <div class="section-body">
                 <h2 class="section-title">List Products</h2>
                 <p class="section-lead">Update Product Data</p>
-                <form method="POST" action="{{ route('products.update', $product) }}">
+                <form method="POST" action="{{ route('products.update', $product) }}" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="row">
@@ -52,10 +52,20 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label>Price</label>
-                                        <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                            name="price" value="{{ $product->price }}">
-                                        @error('price')
+                                        <label>Selling Price</label>
+                                        <input type="number"
+                                            class="form-control @error('selling_price') is-invalid @enderror"
+                                            name="selling_price" value="{{ $product->selling_price }}">
+                                        @error('selling_price')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Purchase Price</label>
+                                        <input type="number"
+                                            class="form-control @error('purchase_price') is-invalid @enderror"
+                                            name="purchase_price" value="{{ $product->purchase_price }}">
+                                        @error('purchase_price')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -68,7 +78,12 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label>Image</label>
+                                        <label>Image</label><br>
+                                        @if ($product->image)
+                                            <img src="{{ Storage::url('products/' . $product->image) }}"
+                                                alt="{{ $product->name }}" class="img-thumbnail mb-2" width="75"
+                                                height="75">
+                                        @endif
                                         <input type="file" class="form-control @error('image') is-invalid @enderror"
                                             name="image" value="{{ $product->image }}">
                                         @error('image')
