@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -34,7 +35,8 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'price' => 'required|integer',
+            'selling_price' => 'required|integer',
+            'purchase_price' => 'required|integer',
             'stock' => 'required|integer',
             'image' => 'nullable|string',
             'category' => 'required|string|in:snack,food,drink',
@@ -81,14 +83,30 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->validate([
+        // $data = $request->validate([
+        //     'name' => 'required|string',
+        //     'description' => 'nullable|string',
+        //     'selling_price' => 'required|integer',
+        //     'purchase_price' => 'required|integer',
+        //     'stock' => 'required|integer',
+        //     'image' => 'nullable|string',
+        //     'category' => 'required|string|in:snack,food,drink',
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'price' => 'required|integer',
+            'selling_price' => 'required|integer',
+            'purchase_price' => 'required|integer',
             'stock' => 'required|integer',
             'image' => 'nullable|string',
             'category' => 'required|string|in:snack,food,drink',
         ]);
+
+        if ($validator->fails()) {
+            return ResponseFormatter::error(null, $validator->errors(), 400);
+        }
+
         $product = Product::find($id);
 
         if ($product === null) {
@@ -96,7 +114,7 @@ class ProductController extends Controller
         }
 
 
-        $base64String = $data['image'];
+        $base64String = $request['image'];
 
         $encodedString = explode(',', $base64String, 2);
         $decodedImage = str_replace(' ', '+', $encodedString[1]);
